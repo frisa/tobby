@@ -103,7 +103,10 @@ public:
             return child;
         }
         else
+        {
             addChild(index);
+            return nullptr;
+        }
     }
 
     void setExpanded(bool expanded)
