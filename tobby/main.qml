@@ -14,7 +14,6 @@ ApplicationWindow {
     TreeView {
         anchors.fill: parent
         model: dataModel
-
         delegate: TreeItemView {
             arrow: Label {
                 font.family: "monospace"
@@ -22,20 +21,16 @@ ApplicationWindow {
                 rotation: model.isExpanded ? 90 : 0
                 verticalAlignment: Label.AlignVCenter
             }
-
             item: Label {
                 property var contextMenu: Menu {
                     y: parent.implicitHeight
-
                     MenuItem {
                         text: "Delete"
                     }
-
                     MenuItem {
                         text: "Add new"
                     }
                 }
-
                 text: model.display
                 verticalAlignment: Label.AlignVCenter
             }
