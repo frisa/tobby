@@ -119,7 +119,7 @@ void TreeViewModel::onRowsInserted(const QModelIndex &parent, int first, int las
     int lastRow = 0;
 
     for (int row = first; row < last + 1; ++row) {
-        // QModelIndex childIndex = parent.child(row, 0);
+        /* QModelIndex childIndex = parent.child(row, 0); obsolete in new Qt version */
         QModelIndex childIndex= index(row,0,parent);
         TreeItemViewModel* n = parentNode->insertChild(row, childIndex);
         if (row == first)

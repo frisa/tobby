@@ -18,7 +18,6 @@ public:
 
     TreeViewModel(QObject* parent= nullptr);
 
-    // QAbstactProxyModel implementation
     void setSourceModel(QAbstractItemModel *sourceModel) override;
     QModelIndex mapToSource(const QModelIndex &proxyIndex) const override;
     QModelIndex mapFromSource(const QModelIndex &sourceIndex) const override;
@@ -48,7 +47,6 @@ private:
     QList<TreeItemViewModel*> flattenedTree_;
     QMap<QModelIndex, bool> expandedMap_;
     QMap<QModelIndex, bool> hiddenMap;
-//    TreeItemViewModel* rootItem_ = nullptr;
 };
 
 #endif // TREEVIEWMODEL_H
