@@ -4,6 +4,8 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import "qrc:/../imports"
+/* 3D */
+import QtQuick3D
 
 ApplicationWindow {
     width: 800
@@ -73,14 +75,42 @@ ApplicationWindow {
                 }
             }
             StackLayout {
-                Layout.columnSpan: 10
                 Layout.fillWidth: true
                 currentIndex: bar.currentIndex
                 Item {
                     id: homeTab
-                    Text{
-                        text: "3D"
-                    }
+                    View3D {
+                            environment: SceneEnvironment {
+                                clearColor: "skyblue"
+                                backgroundMode: SceneEnvironment.Color
+                            }
+                            anchors.fill: parent
+                            PerspectiveCamera {
+                                z: 200
+                            }
+                            DirectionalLight {
+                            }
+                            Model {
+                                position: Qt.vector3d(0, 0, 0)
+                                scale: Qt.vector3d(1, 1, 1)
+                                source: "#Cube"
+                                materials: [DefaultMaterial {diffuseColor: "green"},
+                                            DefaultMaterial {diffuseColor: "blue"}
+                                            ]
+                                eulerRotation.x: 35
+                                eulerRotation.y: 35
+                                eulerRotation.z: 35
+                                SequentialAnimation on eulerRotation.y {
+                                    loops: Animation.Infinite
+                                    NumberAnimation {
+                                        duration: 4500
+                                        to: 360
+                                        from: 0
+                                        easing.type:Easing.InQuad
+                                    }
+                                }
+                            }
+                        }
                 }
                 Item {
                     id: discoverTab
