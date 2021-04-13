@@ -16,35 +16,7 @@ ApplicationWindow {
         anchors.fill: parent
         columns: 12
         rows: 12
-//        TreeView {
-//            Layout.row: 0
-//            Layout.rowSpan: 1
-//            Layout.column: 0
-//            anchors.fill: parent
-//            model: dataModel
-//            delegate: TreeItemView {
-//                arrow: Label {
-//                    font.family: "monospace"
-//                    text: model.hasChildren ? ">" : " "
-//                    rotation: model.isExpanded ? 90 : 0
-//                    verticalAlignment: Label.AlignVCenter
-//                }
-//                item: Label {
-//                    property var contextMenu: Menu {
-//                        y: parent.implicitHeight
-//                        MenuItem {
-//                            text: "Delete"
-//                        }
-//                        MenuItem {
-//                            text: "Add new"
-//                        }
-//                    }
-//                    text: model.display
-//                    verticalAlignment: Label.AlignVCenter
-//                }
-//            }
-//        }
-        Rectangle{
+        TreeView {
             Layout.row: 0
             Layout.column: 0
             Layout.rowSpan: 12
@@ -53,60 +25,81 @@ ApplicationWindow {
             Layout.fillHeight: true
             Layout.preferredWidth: Layout.columnSpan
             Layout.preferredHeight: Layout.rowSpan
-            color: 'blue'
+            model: dataModel
+            delegate: TreeItemView {
+                arrow: Label {
+                    font.family: "monospace"
+                    text: model.hasChildren ? ">" : " "
+                    rotation: model.isExpanded ? 90 : 0
+                    verticalAlignment: Label.AlignVCenter
+                }
+                item: Label {
+                    property var contextMenu: Menu {
+                        y: parent.implicitHeight
+                        MenuItem {
+                            text: "Delete"
+                        }
+                        MenuItem {
+                            text: "Add new"
+                        }
+                    }
+                    text: model.display
+                    verticalAlignment: Label.AlignVCenter
+                }
+            }
         }
-        Rectangle{
+        TabBar {
             Layout.row: 0
             Layout.column: 2
-            Layout.rowSpan: 10
+            Layout.rowSpan: 1
             Layout.columnSpan: 10
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.preferredWidth: Layout.columnSpan
             Layout.preferredHeight: Layout.rowSpan
-            color: 'red'
+            id: bar
+            TabButton {
+                text: qsTr("Home")
+            }
+            TabButton {
+                text: qsTr("Discover")
+            }
+            TabButton {
+                text: qsTr("Activity")
+            }
         }
-        Rectangle{
-            Layout.row: 10
+        StackLayout {
+            Layout.row: 1
             Layout.column: 2
-            Layout.rowSpan: 2
+            Layout.rowSpan: 11
             Layout.columnSpan: 10
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.preferredWidth: Layout.columnSpan
             Layout.preferredHeight: Layout.rowSpan
-            color: 'green'
+            currentIndex: bar.currentIndex
+            Item {
+                id: homeTab
+                Rectangle{
+                    anchors.fill: parent
+                    color: 'blue'
+                }
+            }
+            Item {
+                id: discoverTab
+                Rectangle{
+                    anchors.fill: parent
+                    color: 'green'
+                }
+            }
+            Item {
+                id: activityTab
+                Rectangle{
+                    anchors.fill: parent
+                    color: 'red'
+                }
+            }
         }
-//        TabBar {
-//            Layout.row: 0
-//            Layout.column: 1
-//            id: bar
-//            //width: parent.width
-//            TabButton {
-//                text: qsTr("Home")
-//            }
-//            TabButton {
-//                text: qsTr("Discover")
-//            }
-//            TabButton {
-//                text: qsTr("Activity")
-//            }
-//        }
-//        StackLayout {
-//            Layout.row: 1
-//            Layout.column: 1
-//            //width: parent.width
-//            currentIndex: bar.currentIndex
-//            Item {
-//                id: homeTab
-//            }
-//            Item {
-//                id: discoverTab
-//            }
-//            Item {
-//                id: activityTab
-//            }
-//        }
     }
     menuBar: MenuBar{
         Menu{

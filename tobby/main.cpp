@@ -24,12 +24,12 @@ int main(int argc, char *argv[])
     QStandardItemModel dataModel;
     QStandardItem root("Root");
     //root.setIcon(qtApp.style()->standardIcon(QStyle::SP_DesktopIcon));
-    QStandardItem child1("Child 1");
-    QStandardItem child2("Child 2");
-    QStandardItem child3("Child 3");
-    QStandardItem child1OfChild1("Child 1 of Child 1");
-    QStandardItem child2OfChild1("Child 2 of Child 1");
-    QStandardItem child1OfChild2("Child 1 of Child 2");
+    QStandardItem child1("A1");
+    QStandardItem child2("A2");
+    QStandardItem child3("A3");
+    QStandardItem child1OfChild1("B1");
+    QStandardItem child2OfChild1("B1");
+    QStandardItem child1OfChild2("B2");
     child1.appendRow(&child1OfChild1);
     child1.appendRow(&child2OfChild1);
     child2.appendRow(&child1OfChild2);
