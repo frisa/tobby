@@ -6,35 +6,107 @@ import QtQuick.Layouts 1.15
 import "qrc:/../imports"
 
 ApplicationWindow {
-    width: 640
-    height: 480
+    width: 800
+    height: 500
     visible: true
     title: qsTr("tobby")
     opacity: 1
-    TreeView {
+    GridLayout {
+        id: layout
         anchors.fill: parent
-        model: dataModel
-        delegate: TreeItemView {
-            arrow: Label {
-                font.family: "monospace"
-                text: model.hasChildren ? ">" : " "
-                rotation: model.isExpanded ? 90 : 0
-                verticalAlignment: Label.AlignVCenter
-            }
-            item: Label {
-                property var contextMenu: Menu {
-                    y: parent.implicitHeight
-                    MenuItem {
-                        text: "Delete"
-                    }
-                    MenuItem {
-                        text: "Add new"
-                    }
-                }
-                text: model.display
-                verticalAlignment: Label.AlignVCenter
-            }
+        columns: 12
+        rows: 12
+//        TreeView {
+//            Layout.row: 0
+//            Layout.rowSpan: 1
+//            Layout.column: 0
+//            anchors.fill: parent
+//            model: dataModel
+//            delegate: TreeItemView {
+//                arrow: Label {
+//                    font.family: "monospace"
+//                    text: model.hasChildren ? ">" : " "
+//                    rotation: model.isExpanded ? 90 : 0
+//                    verticalAlignment: Label.AlignVCenter
+//                }
+//                item: Label {
+//                    property var contextMenu: Menu {
+//                        y: parent.implicitHeight
+//                        MenuItem {
+//                            text: "Delete"
+//                        }
+//                        MenuItem {
+//                            text: "Add new"
+//                        }
+//                    }
+//                    text: model.display
+//                    verticalAlignment: Label.AlignVCenter
+//                }
+//            }
+//        }
+        Rectangle{
+            Layout.row: 0
+            Layout.column: 0
+            Layout.rowSpan: 12
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.preferredWidth: Layout.columnSpan
+            Layout.preferredHeight: Layout.rowSpan
+            color: 'blue'
         }
+        Rectangle{
+            Layout.row: 0
+            Layout.column: 2
+            Layout.rowSpan: 10
+            Layout.columnSpan: 10
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.preferredWidth: Layout.columnSpan
+            Layout.preferredHeight: Layout.rowSpan
+            color: 'red'
+        }
+        Rectangle{
+            Layout.row: 10
+            Layout.column: 2
+            Layout.rowSpan: 2
+            Layout.columnSpan: 10
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.preferredWidth: Layout.columnSpan
+            Layout.preferredHeight: Layout.rowSpan
+            color: 'green'
+        }
+//        TabBar {
+//            Layout.row: 0
+//            Layout.column: 1
+//            id: bar
+//            //width: parent.width
+//            TabButton {
+//                text: qsTr("Home")
+//            }
+//            TabButton {
+//                text: qsTr("Discover")
+//            }
+//            TabButton {
+//                text: qsTr("Activity")
+//            }
+//        }
+//        StackLayout {
+//            Layout.row: 1
+//            Layout.column: 1
+//            //width: parent.width
+//            currentIndex: bar.currentIndex
+//            Item {
+//                id: homeTab
+//            }
+//            Item {
+//                id: discoverTab
+//            }
+//            Item {
+//                id: activityTab
+//            }
+//        }
     }
     menuBar: MenuBar{
         Menu{
