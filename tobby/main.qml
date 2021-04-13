@@ -48,55 +48,51 @@ ApplicationWindow {
                 }
             }
         }
-        TabBar {
+        ColumnLayout{
             Layout.row: 0
             Layout.column: 2
-            Layout.rowSpan: 1
+            Layout.rowSpan: 12
             Layout.columnSpan: 10
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.preferredWidth: Layout.columnSpan
             Layout.preferredHeight: Layout.rowSpan
-            id: bar
-            TabButton {
-                text: qsTr("Home")
-            }
-            TabButton {
-                text: qsTr("Discover")
-            }
-            TabButton {
-                text: qsTr("Activity")
-            }
-        }
-        StackLayout {
-            Layout.row: 1
-            Layout.column: 2
-            Layout.rowSpan: 11
-            Layout.columnSpan: 10
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.preferredWidth: Layout.columnSpan
-            Layout.preferredHeight: Layout.rowSpan
-            currentIndex: bar.currentIndex
-            Item {
-                id: homeTab
-                Rectangle{
-                    anchors.fill: parent
-                    color: 'blue'
+            TabBar {
+                id: bar
+                TabButton {
+                    text: qsTr("Home")
+                }
+                TabButton {
+                    text: qsTr("Discover")
+                }
+                TabButton {
+                    text: qsTr("Activity")
                 }
             }
-            Item {
-                id: discoverTab
-                Rectangle{
-                    anchors.fill: parent
-                    color: 'green'
+            StackLayout {
+                Layout.columnSpan: 10
+                Layout.fillWidth: true
+                currentIndex: bar.currentIndex
+                Item {
+                    id: homeTab
+                    Rectangle{
+                        anchors.fill: parent
+                        color: 'blue'
+                    }
                 }
-            }
-            Item {
-                id: activityTab
-                Rectangle{
-                    anchors.fill: parent
-                    color: 'red'
+                Item {
+                    id: discoverTab
+                    Rectangle{
+                        anchors.fill: parent
+                        color: 'green'
+                    }
+                }
+                Item {
+                    id: activityTab
+                    Rectangle{
+                        anchors.fill: parent
+                        color: 'red'
+                    }
                 }
             }
         }
