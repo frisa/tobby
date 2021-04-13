@@ -1,8 +1,8 @@
 #include "treeviewmodel.h"
 
-TreeViewModel::TreeViewModel()
+TreeViewModel::TreeViewModel(QObject *parent)
 {
-
+    //NOP
 }
 
 void TreeViewModel::setSourceModel(QAbstractItemModel *sourceModel)
@@ -96,3 +96,97 @@ QHash<int, QByteArray> TreeViewModel::roleNames() const
     names[Hidden] = "hidden";
     return names;
 }
+
+void TreeViewModel::onLayoutChanged()
+{
+    qDebug() << "onLayoutChanged";
+    doResetModel(sourceModel());
+}
+
+void TreeViewModel::onSourceDataChanged(QModelIndex topLeft, QModelIndex bottomRight)
+{
+    qDebug() << "onSourceDataChanged";
+    emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight));
+}
+
+void TreeViewModel::onRowsInserted(const QModelIndex &parent, int first, int last)
+{
+    TreeItemViewModel* parentNode = findItemByIndex(parent);
+
+    qDebug() << "onRowsInserted" << parent.data() << first << last;
+
+    int firstRow = 0;
+    int lastRow = 0;
+
+    for (int row = first; row < last + 1; ++row) {
+        // QModelIndex childIndex = parent.child(row, 0);
+        QModelIndex childIndex= index(row,0,parent);
+        TreeItemViewModel* n = parentNode->insertChild(row, childIndex);
+        if (row == first)
+            firstRow = n->row();
+        if (row == last)
+            lastRow = n->row();
+    }
+    beginInsertRows(QModelIndex(), firstRow, lastRow);
+    endInsertRows();
+}
+
+void TreeViewModel::onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destinationParent, int destinationRow)
+{
+    qDebug() << "onRowsMoved";
+}
+
+void TreeViewModel::onRowsRemoved(const QModelIndex &parent, int first, int last)
+{
+    qDebug() << "onRowsRemoved";
+}
+
+int TreeViewModel::flatten(QAbstractItemModel *model, QModelIndex parent, TreeItemViewModel *parentNode)
+{
+    if (parentNode == nullptr) {
+        qDeleteAll(flattenedTree_);
+        flattenedTree_.clear();
+    }
+
+    if (model == nullptr)
+        return 0;
+
+    auto rows = model->rowCount(parent);
+
+    for(int rowIndex = 0; rowIndex < rows; ++rowIndex) {
+        QModelIndex index = model->index(rowIndex, 0, parent);
+        TreeItemViewModel* node = nullptr;
+        if (parentNode)
+            node = parentNode->addChild(index);
+        else
+            node = new TreeItemViewModel(parentNode, index, flattenedTree_, this, expandedMap_, hiddenMap);
+
+        if (node->hasChildren())
+            flatten(model, index, node);
+
+        if (node->isExpanded())
+            node->setExpanded(node->isExpanded());
+    }
+}
+
+void TreeViewModel::toggleIsExpanded(int row, bool isExpanded)
+{
+    flattenedTree_[row]->setExpanded(isExpanded);
+}
+
+void TreeViewModel::doResetModel(QAbstractItemModel *sourceModel)
+{
+    beginResetModel();
+    flatten(sourceModel);
+    endResetModel();
+}
+
+TreeItemViewModel *TreeViewModel::findItemByIndex(const QModelIndex &sourceIndex) const
+{
+    for (TreeItemViewModel* n: flattenedTree_) {
+        if (n->sourceIndex() == sourceIndex)
+            return n;
+    }
+    return nullptr;
+}
+

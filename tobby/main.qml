@@ -13,7 +13,7 @@ ApplicationWindow {
     opacity: 1
     TreeView {
         anchors.fill: parent
-        model: fileSystemModel
+        model: dataModel
 
         delegate: TreeItemView {
             arrow: Label {

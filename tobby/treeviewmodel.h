@@ -1,8 +1,8 @@
 #ifndef TREEVIEWMODEL_H
 #define TREEVIEWMODEL_H
 
-#include <QAbstractProxyModel>
 #include <QList>
+#include <QAbstractProxyModel>
 #include "treeitemviewmodel.h"
 
 class TreeViewModel : public QAbstractProxyModel
@@ -16,7 +16,6 @@ public:
         Hidden
     };
 
-    TreeViewModel();
     TreeViewModel(QObject* parent= nullptr);
 
     // QAbstactProxyModel implementation
@@ -35,50 +34,11 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
 private slots:
-    void onLayoutChanged()
-    {
-        qDebug() << "onLayoutChanged";
-        doResetModel(sourceModel());
-    };
-
-    void onSourceDataChanged(QModelIndex topLeft, QModelIndex bottomRight)
-    {
-        qDebug() << "onSourceDataChanged";
-        emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight));
-    }
-
-    void onRowsInserted(const QModelIndex& parent, int first, int last)
-    {
-        TreeItemViewModel* parentNode = findItemByIndex(parent);
-
-        qDebug() << "onRowsInserted" << parent.data() << first << last;
-
-        int firstRow = 0;
-        int lastRow = 0;
-
-        for (int row = first; row < last + 1; ++row) {
-            // QModelIndex childIndex = parent.child(row, 0);
-            QModelIndex childIndex = index(row,0,parent);
-            TreeItemViewModel* n = parentNode->insertChild(row, childIndex);
-            if (row == first)
-                firstRow = n->row();
-            if (row == last)
-                lastRow = n->row();
-        }
-        beginInsertRows(QModelIndex(), firstRow, lastRow);
-        endInsertRows();
-    }
-
-    void onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destinationParent,
-                     int destinationRow)
-    {
-        qDebug() << "onRowsMoved";
-    }
-
-    void onRowsRemoved(const QModelIndex& parent, int first, int last)
-    {
-        qDebug() << "onRowsRemoved";
-    }
+    void onLayoutChanged();
+    void onSourceDataChanged(QModelIndex topLeft, QModelIndex bottomRight);
+    void onRowsInserted(const QModelIndex& parent, int first, int last);
+    void onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destinationParent, int destinationRow);
+    void onRowsRemoved(const QModelIndex& parent, int first, int last);
 
 private:
     int flatten(QAbstractItemModel *model, QModelIndex parent = QModelIndex(), TreeItemViewModel* parentNode= nullptr);
