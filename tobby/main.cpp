@@ -13,7 +13,9 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    QString strMainQML = QStringLiteral("qrc:/main.qml");
+    const QUrl url(strMainQML);
+
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
@@ -23,7 +25,7 @@ int main(int argc, char *argv[])
     /* DATA MODEL */
     QStandardItemModel dataModel;
     QStandardItem root("Root");
-    //root.setIcon(qtApp.style()->standardIcon(QStyle::SP_DesktopIcon));
+    root.setIcon(QIcon("qrc:/icons/sockchrist.png"));
     QStandardItem child1("A1");
     QStandardItem child2("A2");
     QStandardItem child3("A3");
@@ -42,6 +44,5 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("dataModel", &standardItemTreeViewModel);
     engine.load(url);
-
     return app.exec();
 }

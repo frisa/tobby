@@ -10,7 +10,7 @@ ApplicationWindow {
     height: 500
     visible: true
     title: qsTr("tobby")
-    opacity: 1
+    opacity: 0.97
     GridLayout {
         id: layout
         anchors.fill: parent
@@ -60,13 +60,16 @@ ApplicationWindow {
             TabBar {
                 id: bar
                 TabButton {
+                    width: implicitWidth
+                    text: qsTr("3D Space")
+                }
+                TabButton {
+                    width: implicitWidth
                     text: qsTr("Home")
                 }
                 TabButton {
-                    text: qsTr("Discover")
-                }
-                TabButton {
-                    text: qsTr("Activity")
+                    width: implicitWidth
+                    text: qsTr("Help")
                 }
             }
             StackLayout {
@@ -75,23 +78,20 @@ ApplicationWindow {
                 currentIndex: bar.currentIndex
                 Item {
                     id: homeTab
-                    Rectangle{
-                        anchors.fill: parent
-                        color: 'blue'
+                    Text{
+                        text: "3D"
                     }
                 }
                 Item {
                     id: discoverTab
-                    Rectangle{
-                        anchors.fill: parent
-                        color: 'green'
+                    Text{
+                        text: "HOME"
                     }
                 }
                 Item {
                     id: activityTab
-                    Rectangle{
-                        anchors.fill: parent
-                        color: 'red'
+                    Text{
+                        text: "HELP"
                     }
                 }
             }
@@ -100,25 +100,50 @@ ApplicationWindow {
     menuBar: MenuBar{
         Menu{
             title: qsTr("&File")
-            Action { text: qsTr("&New...") }
-            Action { text: qsTr("&Open...") }
-            Action { text: qsTr("&Save") }
-            Action { text: qsTr("Save &As...") }
+            Action {
+                text: qsTr("&New...")
+                icon.source: "qrc:/icons/icons/new.png"
+            }
+            Action {
+                text: qsTr("&Open...")
+                icon.source: "qrc:/icons/icons/open.png"
+            }
+            Action {
+                text: qsTr("&Save")
+                icon.source: "qrc:/icons/icons/save.png"
+            }
+            Action {
+                text: qsTr("Save &As...")
+                icon.source: "qrc:/icons/icons/saveall.png"
+            }
             MenuSeparator { }
-            Action { text: qsTr("&Quit") }
+            Action {
+                text: qsTr("&Quit")
+                icon.source: "qrc:/icons/icons/exit.png"
+            }
         }
         Menu{
             title: qsTr("&About")
-            Action { text: qsTr("&Help") }
+            Action {
+                text: qsTr("&Help")
+                icon.source: "qrc:/icons/icons/help.png"
+            }
         }
     }
     header: ToolBar {
             id: headerBar
             RowLayout{
-                anchors.fill: parent
                 ToolButton {
-                     text: qsTr("New")
-                     //onClicked: stack.pop()
+                     icon.source: "qrc:/icons/icons/new.png"
+                }
+                ToolButton {
+                     icon.source: "qrc:/icons/icons/open.png"
+                }
+                ToolButton {
+                     icon.source: "qrc:/icons/icons/save.png"
+                }
+                ToolButton {
+                     icon.source: "qrc:/icons/icons/saveall.png"
                 }
             }
     }
