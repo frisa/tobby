@@ -9,6 +9,7 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         sortfilterproxymodel.cpp \
+        systemmodel.cpp \
         treeitemviewmodel.cpp \
         treeviewmodel.cpp
 
@@ -30,5 +31,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     sortfilterproxymodel.h \
+    systemmodel.h \
     treeitemviewmodel.h \
     treeviewmodel.h

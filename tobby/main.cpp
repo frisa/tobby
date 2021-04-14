@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include <QStandardItemModel>
 #include "treeviewmodel.h"
+#include "systemmodel.h"
 
 #define FS_MODEL
 
@@ -22,7 +23,7 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
-    /* DATA MODEL */
+    /* DATA MODEL FOR TREEVIEW */
     QStandardItemModel dataModel;
     QStandardItem root("Root");
     root.setIcon(QIcon("qrc:/icons/sockchrist.png"));
@@ -42,6 +43,9 @@ int main(int argc, char *argv[])
     TreeViewModel standardItemTreeViewModel;
     standardItemTreeViewModel.setSourceModel(&dataModel);
 
+    /* DATA MODEL FOR SYSTEM */
+    SystemModel sm;
+    engine.rootContext()->setContextProperty("systemModel", &sm);
     engine.rootContext()->setContextProperty("dataModel", &standardItemTreeViewModel);
     engine.load(url);
     return app.exec();

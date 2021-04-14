@@ -28,7 +28,11 @@ ApplicationWindow {
             Layout.preferredWidth: Layout.columnSpan
             Layout.preferredHeight: Layout.rowSpan
             model: dataModel
-            delegate: TreeItemView {
+            delegate: treeDelegate
+        }
+        Component{
+            id: treeDelegate
+            TreeItemView {
                 arrow: Label {
                     font.family: "monospace"
                     text: model.hasChildren ? ">" : " "
@@ -63,6 +67,10 @@ ApplicationWindow {
                 id: bar
                 TabButton {
                     width: implicitWidth
+                    text: qsTr("System")
+                }
+                TabButton {
+                    width: implicitWidth
                     text: qsTr("3D Space")
                 }
                 TabButton {
@@ -77,6 +85,25 @@ ApplicationWindow {
             StackLayout {
                 Layout.fillWidth: true
                 currentIndex: bar.currentIndex
+                Item {
+                    id: systemTab
+                    Text {
+                        id: name
+                        text: qsTr("text")
+                    }
+                    Component{
+                        id: systemDelegate
+                        Text{
+                        text: "ModelTest"
+                        }
+                    }
+                    ListView {
+                        id: lvSystem
+                        anchors.fill: parent
+                        model: systemModel
+                        delegate: systemDelegate
+                    }
+                }
                 Item {
                     id: homeTab
                     View3D {
@@ -103,8 +130,8 @@ ApplicationWindow {
                                 SequentialAnimation on eulerRotation.y {
                                     loops: Animation.Infinite
                                     NumberAnimation {
-                                        duration: 4500
-                                        to: 360
+                                        duration: 10000
+                                        to: 3600
                                         from: 0
                                         easing.type:Easing.InQuad
                                     }
